@@ -43,9 +43,14 @@ function calculateTotalCalories() {
   var totalCaloriesFormatted = totalCalories.toLocaleString('de-DE', { maximumFractionDigits: 2 })
 
   const proteinNeed = globalWeight * 1.7
+  const proteinCalories = globalWeight * 1.7 * 4
+  const remainingCalories = totalCalories - globalWeight * 1.7 * 4
+  const remainingCaloriesFormatted = remainingCalories.toLocaleString('de-DE', { maximumFractionDigits: 2 })
 
   document.getElementById('total-calories-result').innerText = 'Geschätzter Gesamtkalorienbedarf: ' + totalCaloriesFormatted + ' Kalorien pro Tag.'
-  document.getElementById('protein-result').innerText = 'Proteinbedarf: ' + proteinNeed + 'g pro Tag.'
+  document.getElementById('protein-result').innerText = 'Proteinbedarf: ' + proteinNeed + 'g pro Tag. Das sind ' + proteinCalories + ' Kalorien.'
+  document.getElementById('remainingCalories').innerText = 'Es bleiben ' + remainingCaloriesFormatted + ' Kalorien übrig.'
+
   saveToLocalStorage()
 }
 
