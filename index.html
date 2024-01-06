@@ -8,58 +8,61 @@
   <body>
     <h1>Kalorienbedarfsrechner</h1>
 
-    <form id="calculator-form">
-      <label for="gender">Geschlecht:</label>
-      <select class="inputField" id="gender">
-        <option value="male">Männlich</option>
-        <option value="female">Weiblich</option></select
-      ><br />
+    <div style="display: flex; flex-wrap: wrap;">
 
-      <label for="weight">Gewicht (in kg):</label>
-      <input class="inputField" type="number" id="weight" required /><br />
+      <div style="width: 50%; min-width: 400px;">
+        <form id="calculator-form">
+          <label for="gender">Geschlecht:</label>
+          <select class="inputField" id="gender">
+            <option value="male">Männlich</option>
+            <option value="female">Weiblich</option></select
+          ><br />
+          <label for="weight">Gewicht (in kg):</label>
+          <input class="inputField" type="number" id="weight" required /><br />
+          <label for="height">Größe (in cm):</label>
+          <input class="inputField" type="number" id="height" required /><br />
+          <label for="age">Alter (in Jahren):</label>
+          <input class="inputField" type="number" id="age" required /><br />
+          <input class="button" type="submit" value="BMR berechnen" />
+        </form>
+        <div id="bmr-result"></div>
+      </div>
 
-      <label for="height">Größe (in cm):</label>
-      <input class="inputField" type="number" id="height" required /><br />
+      <div style="width: 50%; min-width: 400px;">
 
-      <label for="age">Alter (in Jahren):</label>
-      <input class="inputField" type="number" id="age" required /><br />
+        <label for="activity">Aktivitätslevel:</label>
+        <select class="inputField" id="activity" onchange="calculateTotalCalories()">
+          <option value="1.2">Sedentär</option>
+          <option value="1.375">Leicht aktiv</option>
+          <option value="1.55">Moderat aktiv</option>
+          <option value="1.725">Sehr aktiv</option>
+          <option value="1.9">Extra aktiv</option></select
+        ><br />
+        
+        <label for="activity">Ziel:</label>
+        <select class="inputField" id="goal" onchange="calculateTotalCalories()">
+          <option value="500">Massephase</option>
+          <option value="250">Magerer Muskelaufbau</option>
+          <option value="0" selected>Gewicht halten</option>
+          <option value="-500">Abnehmen</option>
+          <option value="-1000">Stark abnehmen</option></select
+        ><br />
 
-      <input class="button" type="submit" value="BMR berechnen" />
-    </form>
+        <input class="button" type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
+        <div id="total-calories-result"></div>
+        <div id="protein-result"></div>
+        <div id="remainingCalories"></div>
+        
+        <!-- Slider --><br>
+        <label for="carbs-slider" style="font-weight: bold;">Kohlenhydrate (kCal):</label>
+        <input type="range" id="carbs-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
+        <span id="carbsKCal"></span> = <span id="carbs-amount"></span> Kohlenhydrate<br><br>
 
-    <div id="bmr-result"></div>
-
-    <label for="activity">Aktivitätslevel:</label>
-    <select class="inputField" id="activity" onchange="calculateTotalCalories()">
-      <option value="1.2">Sedentär</option>
-      <option value="1.375">Leicht aktiv</option>
-      <option value="1.55">Moderat aktiv</option>
-      <option value="1.725">Sehr aktiv</option>
-      <option value="1.9">Extra aktiv</option></select
-    ><br />
-
-    <label for="activity">Ziel:</label>
-    <select class="inputField" id="goal" onchange="calculateTotalCalories()">
-      <option value="500">Massephase</option>
-      <option value="250">Magerer Muskelaufbau</option>
-      <option value="0" selected>Gewicht halten</option>
-      <option value="-500">Abnehmen</option>
-      <option value="-1000">Stark abnehmen</option></select
-    ><br />
-    <input class="button" type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
-
-    <div id="total-calories-result"></div>
-    <div id="protein-result"></div>
-    <div id="remainingCalories"></div>
-
-    <!-- Slider --><br>
-    <label for="carbs-slider">Kohlenhydrate (kCal):</label>
-    <input type="range" id="carbs-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
-    <label id="carbs-amount"></label><label id="carbsKCal"></label><br>
-
-    <label for="fats-slider">Fett (kCal):</label>
-    <input type="range" id="fats-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
-    <label id="fats-amount"></label><label id="fatsKCal"></label><br>
+        <label for="fats-slider" style="font-weight: bold;">Fett (kCal):</label>
+        <input type="range" id="fats-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
+        <span id="fatsKCal"></span> = <span id="fats-amount"></span> Fett<br>
+      </div>
+    </div>
 
     <!-- Erklärungsbereich -->
     <div id="explanation-area">

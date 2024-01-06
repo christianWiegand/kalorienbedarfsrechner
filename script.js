@@ -120,7 +120,6 @@ function updateMacros() {
   let fatsSlider = document.getElementById('fats-slider')
   let carbsCalories = carbsSlider.value
   let fatsCalories = fatsSlider.value
-  const totalCalories = parseFloat(carbsCalories) + parseFloat(fatsCalories)
 
   if (carbsSlider === document.activeElement) {
 
@@ -135,8 +134,8 @@ function updateMacros() {
 
   const carbsFormatted = (carbsSlider.value / 4).toLocaleString('de-DE', { maximumFractionDigits: 2 })
   const fatFormatted = (fatsSlider.value / 9).toLocaleString('de-DE', { maximumFractionDigits: 2 })
-  document.getElementById('carbs-amount').innerText = carbsFormatted + 'g'
-  document.getElementById('fats-amount').innerText = fatFormatted + 'g'
+  document.getElementById('carbs-amount').innerText = carbsFormatted + ' g'
+  document.getElementById('fats-amount').innerText = fatFormatted + ' g'
   showCalories('carbs')
   showCalories('fats')
 }
