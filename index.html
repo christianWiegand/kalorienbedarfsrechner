@@ -37,8 +37,26 @@
       <option value="1.725">Sehr aktiv</option>
       <option value="1.9">Extra aktiv</option></select
     ><br />
+    <input type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
 
     <div id="total-calories-result"></div>
+
+    <!-- Vorhandene Elemente -->
+
+    <!-- Erklärungsbereich -->
+    <div id="explanation-area">
+      <h2>Was bedeutet das alles?</h2>
+      <p><strong>Grundumsatz (BMR - Basal Metabolic Rate):</strong> Die Menge an Energie, die dein Körper benötigt, um grundlegende Lebensfunktionen aufrechtzuerhalten, während du in Ruhe bist, in einem neutral temperierten Umfeld, in einem post-absorptiven Zustand (keine Verdauung von Nahrung).</p>
+      <p><strong>Aktivitätslevel:</strong> Die zusätzlichen Kalorien, die dein Körper benötigt, abhängig von deinem täglichen Aktivitätsniveau. Hier sind die Faktoren, die du verwenden kannst, um deinen Gesamtenergieverbrauch zu schätzen:</p>
+      <ul>
+          <li><strong>Sedentär:</strong> wenig oder keine Übung, BMR x 1,2</li>
+          <li><strong>Leicht aktiv:</strong> leichte Übung/Sport 1-3 Tage/Woche, BMR x 1,375</li>
+          <li><strong>Moderat aktiv:</strong> moderate Übung/Sport 3-5 Tage/Woche, BMR x 1,55</li>
+          <li><strong>Sehr aktiv:</strong> harte Übung/Sport 6-7 Tage die Woche, BMR x 1,725</li>
+          <li><strong>Extra aktiv:</strong> sehr harte Übung, körperlicher Beruf oder Training zweimal täglich, BMR x 1,9</li>
+      </ul>
+      <p>Beachte, dass diese Werte Durchschnittswerte sind und individuelle Unterschiede in Stoffwechsel und Körperzusammensetzung nicht berücksichtigen.</p>
+    </div>
 
     <script src="script.js"></script>
   </body>

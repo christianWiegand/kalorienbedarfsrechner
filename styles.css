@@ -12,3 +12,31 @@ label, select, input {
   margin-top: 20px;
   font-weight: bold;
 }
+
+/* Vorhandenes Styling */
+
+#explanation-area {
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  margin-top: 40px;
+}
+
+#explanation-area h2 {
+  margin-bottom: 15px;
+}
+
+#explanation-area ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#explanation-area ul li {
+  margin-bottom: 10px;
+  padding-left: 20px;
+  text-indent: -20px;
+}
+
+#explanation-area ul li:before {
+  content: "• ";
+  color: #333;
+}
