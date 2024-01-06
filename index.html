@@ -52,6 +52,15 @@
     <div id="protein-result"></div>
     <div id="remainingCalories"></div>
 
+    <!-- Slider --><br>
+    <label for="carbs-slider">Kohlenhydrate (kCal):</label>
+    <input type="range" id="carbs-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
+    <label id="carbs-amount"></label><label id="carbsKCal"></label><br>
+
+    <label for="fats-slider">Fett (kCal):</label>
+    <input type="range" id="fats-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
+    <label id="fats-amount"></label><label id="fatsKCal"></label><br>
+
     <!-- Erklärungsbereich -->
     <div id="explanation-area">
       <h2>Was bedeutet das alles?</h2>

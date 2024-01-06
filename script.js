@@ -2,6 +2,8 @@
 Die Berechnung des Kalorienbedarfs, auch Grundumsatz genannt, hängt von verschiedenen Faktoren ab, wie Alter, Geschlecht, Gewicht, Größe und Aktivitätslevel. Es gibt mehrere Methoden, um den Grundumsatz zu schätzen. Eine der bekanntesten ist die Harris-Benedict-Formel. 
 Das Ergebnis gibt eine Schätzung der Kalorien, die dein Körper täglich benötigt, um sein aktuelles Gewicht zu halten, basierend auf deinem Aktivitätslevel.
 Eine Webseite in HTML, CSS und Javascript, die mein Geschlecht, Gewicht in kg, Größe in cm, Alter in Jahren abfragt und mir dann mein BMR anzeigt. Anschließend soll es ein Dropdown geben, wo ich den täglichen Aktivitätslevel auswählen kann. Wenn die Auswahl getroffen wurde, soll die Schätzung der Kalorien, die dein Körper täglich benötigt angezeigt werden.
+Auch der Proteinbedarf soll berechnet werden. Der Proteinbedarf ist abhängig von deinem Körpergewicht. Die empfohlene Menge liegt bei 1,7g pro kg Körpergewicht.
+Es werden auch die restlichen Kalorien angezeigt, die du noch essen kannst, um dein Ziel zu erreichen.
 */
 
 document.getElementById('calculator-form').onsubmit = function(event) {
@@ -31,11 +33,11 @@ function calculateBMR() {
   saveToLocalStorage()
 }
 
+let remainingCalories
 function calculateTotalCalories() {
   
   calculateBMR()
 
-  var bmrText = document.getElementById('bmr-result').innerText
   var activityFactor = parseFloat(document.getElementById('activity').value)
   var goalFactor = parseFloat(document.getElementById('goal').value)
 
@@ -44,14 +46,25 @@ function calculateTotalCalories() {
 
   const proteinNeed = globalWeight * 1.7
   const proteinCalories = globalWeight * 1.7 * 4
-  const remainingCalories = totalCalories - globalWeight * 1.7 * 4
+  remainingCalories = totalCalories - globalWeight * 1.7 * 4
   const remainingCaloriesFormatted = remainingCalories.toLocaleString('de-DE', { maximumFractionDigits: 2 })
+
+  document.getElementById('carbs-slider').max = remainingCalories
+  document.getElementById('fats-slider').max = remainingCalories
+
+  const halfRemainingCalories = remainingCalories / 2;
+  document.getElementById('carbs-slider').value = halfRemainingCalories
+  document.getElementById('fats-slider').value = halfRemainingCalories
 
   document.getElementById('total-calories-result').innerText = 'Geschätzter Gesamtkalorienbedarf: ' + totalCaloriesFormatted + ' Kalorien pro Tag.'
   document.getElementById('protein-result').innerText = 'Proteinbedarf: ' + proteinNeed + 'g pro Tag. Das sind ' + proteinCalories + ' Kalorien.'
   document.getElementById('remainingCalories').innerText = 'Es bleiben ' + remainingCaloriesFormatted + ' Kalorien übrig.'
 
   saveToLocalStorage()
+  
+  updateMacros()
+  showCalories('carbs')
+  showCalories('fats')
 }
 
 function saveToLocalStorage() {
@@ -91,6 +104,46 @@ function loadFromLocalStorage() {
   if(!allStuffIsThere) return
   calculateBMR()
   calculateTotalCalories()
+
+  updateMacros()
 }
 
 document.addEventListener('DOMContentLoaded', loadFromLocalStorage)
+
+/*
+Unterhalb der übrig bleibenden Kalorien möchte ich jetzt zwei Schieberegler nebeneinander haben. Einer für Kohlenhydrate und einer für Fett. Die Schieberegler regeln jeweils die Kalorienmenge von diesem Makrotyp. Wenn ich z.B. die Kohlenhydrate erhöhe, dann muss sich die Menge Fett verringern und umgekehrt. Insgesamt muss es immer die Summe aus der Variable remainingCalories ergeben. Denk dran, dass Fett pro Gramm mehr Kalorien hat als Kohlenhydrate pro Gramm.
+Und unterhalb der Schieberegler, soll jeweils die Menge Kohlenhydrate und Fett in Gramm ausgegeben werden.
+*/
+function updateMacros() {
+
+  let carbsSlider = document.getElementById('carbs-slider')
+  let fatsSlider = document.getElementById('fats-slider')
+  let carbsCalories = carbsSlider.value
+  let fatsCalories = fatsSlider.value
+  const totalCalories = parseFloat(carbsCalories) + parseFloat(fatsCalories)
+
+  if (carbsSlider === document.activeElement) {
+
+    fatsCalories = remainingCalories - carbsCalories
+    fatsSlider.value = fatsCalories
+  }
+  else if (fatsSlider === document.activeElement) {
+
+    carbsCalories = remainingCalories - fatsCalories
+    carbsSlider.value = carbsCalories
+  }
+
+  const carbsFormatted = (carbsSlider.value / 4).toLocaleString('de-DE', { maximumFractionDigits: 2 })
+  const fatFormatted = (fatsSlider.value / 9).toLocaleString('de-DE', { maximumFractionDigits: 2 })
+  document.getElementById('carbs-amount').innerText = carbsFormatted + 'g'
+  document.getElementById('fats-amount').innerText = fatFormatted + 'g'
+  showCalories('carbs')
+  showCalories('fats')
+}
+
+function showCalories(macroType) {
+
+  const slider = document.getElementById(`${macroType}-slider`)
+  const amountLabel = document.getElementById(`${macroType}KCal`)
+  amountLabel.innerText = `${slider.value} kCal`
+}
