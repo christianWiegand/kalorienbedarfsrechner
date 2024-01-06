@@ -1,0 +1,14 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+label, select, input {
+  margin-bottom: 10px;
+  display: block;
+}
+
+#bmr-result, #total-calories-result {
+  margin-top: 20px;
+  font-weight: bold;
+}
