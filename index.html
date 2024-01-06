@@ -37,11 +37,19 @@
       <option value="1.725">Sehr aktiv</option>
       <option value="1.9">Extra aktiv</option></select
     ><br />
+
+    <label for="activity">Ziel:</label>
+    <select class="inputField" id="goal" onchange="calculateTotalCalories()">
+      <option value="500">Massephase</option>
+      <option value="250">Magerer Muskelaufbau</option>
+      <option value="0" selected>Gewicht halten</option>
+      <option value="-500">Abnehmen</option>
+      <option value="-1000">Stark abnehmen</option></select
+    ><br />
     <input class="button" type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
 
     <div id="total-calories-result"></div>
-
-    <!-- Vorhandene Elemente -->
+    <div id="protein-result"></div>
 
     <!-- Erklärungsbereich -->
     <div id="explanation-area">

@@ -11,11 +11,13 @@ document.getElementById('calculator-form').onsubmit = function(event) {
 }
 
 var bmr
+let globalWeight
 
 function calculateBMR() {
 
   var gender = document.getElementById('gender').value
   var weight = parseFloat(document.getElementById('weight').value)
+  globalWeight = weight
   var height = parseFloat(document.getElementById('height').value)
   var age = parseFloat(document.getElementById('age').value)
 
@@ -35,10 +37,15 @@ function calculateTotalCalories() {
 
   var bmrText = document.getElementById('bmr-result').innerText
   var activityFactor = parseFloat(document.getElementById('activity').value)
+  var goalFactor = parseFloat(document.getElementById('goal').value)
 
-  var totalCalories = bmr * activityFactor
+  var totalCalories = bmr * activityFactor + goalFactor
   var totalCaloriesFormatted = totalCalories.toLocaleString('de-DE', { maximumFractionDigits: 2 })
+
+  const proteinNeed = globalWeight * 1.7
+
   document.getElementById('total-calories-result').innerText = 'Geschätzter Gesamtkalorienbedarf: ' + totalCaloriesFormatted + ' Kalorien pro Tag.'
+  document.getElementById('protein-result').innerText = 'Proteinbedarf: ' + proteinNeed + 'g pro Tag.'
   saveToLocalStorage()
 }
 
@@ -49,12 +56,14 @@ function saveToLocalStorage() {
   var height = document.getElementById('height').value
   var age = document.getElementById('age').value
   var activity = document.getElementById('activity').value
+  var goal = document.getElementById('goal').value
 
   localStorage.setItem('gender', gender)
   localStorage.setItem('weight', weight)
   localStorage.setItem('height', height)
   localStorage.setItem('age', age)
   localStorage.setItem('activity', activity)
+  localStorage.setItem('goal', goal)
 }
 
 document.getElementById('gender').addEventListener('change', saveToLocalStorage)
@@ -62,6 +71,7 @@ document.getElementById('weight').addEventListener('input', saveToLocalStorage)
 document.getElementById('height').addEventListener('input', saveToLocalStorage)
 document.getElementById('age').addEventListener('input', saveToLocalStorage)
 document.getElementById('activity').addEventListener('change', saveToLocalStorage)
+document.getElementById('goal').addEventListener('change', saveToLocalStorage)
 
 function loadFromLocalStorage() {
 
@@ -70,6 +80,7 @@ function loadFromLocalStorage() {
   document.getElementById('height').value = localStorage.getItem('height') || ''
   document.getElementById('age').value = localStorage.getItem('age') || ''
   document.getElementById('activity').value = localStorage.getItem('activity') || '1.2'
+  document.getElementById('goal').value = localStorage.getItem('goal') || '0'
 
   const allStuffIsThere = document.getElementById('weight').value && document.getElementById('height').value && document.getElementById('age').value
   if(!allStuffIsThere) return
