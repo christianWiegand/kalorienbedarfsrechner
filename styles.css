@@ -9,11 +9,11 @@ label, select, input {
 }
 
 #bmr-result, #total-calories-result {
+
   margin-top: 20px;
+  margin-bottom: 20px;
   font-weight: bold;
 }
-
-/* Vorhandenes Styling */
 
 #explanation-area {
   padding: 20px;
@@ -39,4 +39,29 @@ label, select, input {
 #explanation-area ul li:before {
   content: "• ";
   color: #333;
+}
+
+.button {
+
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.inputField {
+
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
 }

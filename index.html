@@ -10,34 +10,34 @@
 
     <form id="calculator-form">
       <label for="gender">Geschlecht:</label>
-      <select id="gender">
+      <select class="inputField" id="gender">
         <option value="male">Männlich</option>
         <option value="female">Weiblich</option></select
       ><br />
 
       <label for="weight">Gewicht (in kg):</label>
-      <input type="number" id="weight" required /><br />
+      <input class="inputField" type="number" id="weight" required /><br />
 
       <label for="height">Größe (in cm):</label>
-      <input type="number" id="height" required /><br />
+      <input class="inputField" type="number" id="height" required /><br />
 
       <label for="age">Alter (in Jahren):</label>
-      <input type="number" id="age" required /><br />
+      <input class="inputField" type="number" id="age" required /><br />
 
-      <input type="submit" value="BMR berechnen" />
+      <input class="button" type="submit" value="BMR berechnen" />
     </form>
 
     <div id="bmr-result"></div>
 
     <label for="activity">Aktivitätslevel:</label>
-    <select id="activity" onchange="calculateTotalCalories()">
+    <select class="inputField" id="activity" onchange="calculateTotalCalories()">
       <option value="1.2">Sedentär</option>
       <option value="1.375">Leicht aktiv</option>
       <option value="1.55">Moderat aktiv</option>
       <option value="1.725">Sehr aktiv</option>
       <option value="1.9">Extra aktiv</option></select
     ><br />
-    <input type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
+    <input class="button" type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
 
     <div id="total-calories-result"></div>
 

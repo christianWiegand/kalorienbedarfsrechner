@@ -64,12 +64,17 @@ document.getElementById('age').addEventListener('input', saveToLocalStorage)
 document.getElementById('activity').addEventListener('change', saveToLocalStorage)
 
 function loadFromLocalStorage() {
-  
+
   document.getElementById('gender').value = localStorage.getItem('gender') || 'male'
   document.getElementById('weight').value = localStorage.getItem('weight') || ''
   document.getElementById('height').value = localStorage.getItem('height') || ''
   document.getElementById('age').value = localStorage.getItem('age') || ''
   document.getElementById('activity').value = localStorage.getItem('activity') || '1.2'
+
+  const allStuffIsThere = document.getElementById('weight').value && document.getElementById('height').value && document.getElementById('age').value
+  if(!allStuffIsThere) return
+  calculateBMR()
+  calculateTotalCalories()
 }
 
 document.addEventListener('DOMContentLoaded', loadFromLocalStorage)
