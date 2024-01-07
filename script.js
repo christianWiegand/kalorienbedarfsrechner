@@ -31,6 +31,7 @@ function calculateBMR() {
   var bmrFormatted = bmr.toLocaleString('de-DE', { maximumFractionDigits: 2 })
   document.getElementById('bmr-result').innerText = 'Dein Grundumsatz (BMR) ist: ' + bmrFormatted + ' Kalorien pro Tag.'
   saveToLocalStorage()
+  calculateBMI()
 }
 
 let remainingCalories
@@ -145,4 +146,36 @@ function showCalories(macroType) {
   const slider = document.getElementById(`${macroType}-slider`)
   const amountLabel = document.getElementById(`${macroType}KCal`)
   amountLabel.innerText = `${slider.value} kCal`
+}
+
+function calculateBMI() {
+
+  const weight = parseFloat(document.getElementById('weight').value)
+  const heightInMeters = parseFloat(document.getElementById('height').value) / 100
+  const bmi = weight / (heightInMeters * heightInMeters)
+  const bmiFormatted = bmi.toLocaleString('de-DE', { maximumFractionDigits: 2 })
+  document.getElementById('bmi-result').innerText = 'Dein BMI ist: ' + bmiFormatted
+
+  updateBMIColor(bmi)
+}
+
+function updateBMIColor(bmi) {
+
+  const bmiResultElement = document.getElementById('bmi-result')
+  if (bmi < 16 || bmi > 30) {
+
+    bmiResultElement.style.color = 'red'
+  }
+  else if ((bmi >= 16 && bmi <= 16.9) || (bmi >= 25 && bmi <= 29.9)) {
+
+    bmiResultElement.style.color = 'orange'
+  }
+  else if (bmi >= 17 && bmi <= 18.4) {
+
+    bmiResultElement.style.color = 'black'
+  }
+  else if (bmi >= 18.5 && bmi <= 24.9) {
+
+    bmiResultElement.style.color = 'green'
+  }
 }

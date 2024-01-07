@@ -1,84 +1,194 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Kalorienbedarfsrechner</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <meta charset="UTF-8" />
-  </head>
-  <body>
-    <h1>Kalorienbedarfsrechner</h1>
 
-    <div style="display: flex; flex-wrap: wrap;">
+<head>
+  <title>Kalorienbedarfsrechner</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <meta charset="UTF-8" />
+</head>
 
-      <div style="width: 50%; min-width: 400px;">
-        <form id="calculator-form">
-          <label for="gender">Geschlecht:</label>
-          <select class="inputField" id="gender">
-            <option value="male">Männlich</option>
-            <option value="female">Weiblich</option></select
-          ><br />
-          <label for="weight">Gewicht (in kg):</label>
-          <input class="inputField" type="number" id="weight" required /><br />
-          <label for="height">Größe (in cm):</label>
-          <input class="inputField" type="number" id="height" required /><br />
-          <label for="age">Alter (in Jahren):</label>
-          <input class="inputField" type="number" id="age" required /><br />
-          <input class="button" type="submit" value="BMR berechnen" />
-        </form>
-        <div id="bmr-result"></div>
-      </div>
+<body>
+  <h1>Kalorienbedarfsrechner</h1>
 
-      <div style="width: 50%; min-width: 400px;">
+  <div style="display: flex; flex-wrap: wrap;">
 
-        <label for="activity">Aktivitätslevel:</label>
-        <select class="inputField" id="activity" onchange="calculateTotalCalories()">
-          <option value="1.2">Sedentär</option>
-          <option value="1.375">Leicht aktiv</option>
-          <option value="1.55">Moderat aktiv</option>
-          <option value="1.725">Sehr aktiv</option>
-          <option value="1.9">Extra aktiv</option></select
-        ><br />
-        
-        <label for="activity">Ziel:</label>
-        <select class="inputField" id="goal" onchange="calculateTotalCalories()">
-          <option value="500">Massephase</option>
-          <option value="250">Magerer Muskelaufbau</option>
-          <option value="0" selected>Gewicht halten</option>
-          <option value="-500">Abnehmen</option>
-          <option value="-1000">Stark abnehmen</option></select
-        ><br />
+    <div style="width: 50%; min-width: 400px;">
 
-        <input class="button" type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
-        <div id="total-calories-result"></div>
-        <div id="protein-result"></div>
-        <div id="remainingCalories"></div>
-        
-        <!-- Slider --><br>
-        <label for="carbs-slider" style="font-weight: bold;">Kohlenhydrate (kCal):</label>
-        <input type="range" id="carbs-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
-        <span id="carbsKCal"></span> = <span id="carbs-amount"></span> Kohlenhydrate<br><br>
+      <form id="calculator-form">
 
-        <label for="fats-slider" style="font-weight: bold;">Fett (kCal):</label>
-        <input type="range" id="fats-slider" min="0" max="remainingCalories" value="50" class="slider" oninput="updateMacros()">
-        <span id="fatsKCal"></span> = <span id="fats-amount"></span> Fett<br>
-      </div>
+        <label for="gender">Geschlecht:</label>
+        <select class="inputField" id="gender">
+          <option value="male">Männlich</option>
+          <option value="female">Weiblich</option>
+        </select><br />
+
+        <label for="weight">Gewicht (in kg):</label>
+        <input class="inputField" type="number" id="weight" required /><br />
+
+        <label for="height">Größe (in cm):</label>
+        <input class="inputField" type="number" id="height" required /><br />
+
+        <label for="age">Alter (in Jahren):</label>
+        <input class="inputField" type="number" id="age" required /><br />
+
+        <input class="button" type="submit" value="BMR berechnen" />
+      </form>
+
+      <div id="bmr-result"></div>
+      <div id="bmi-result"></div>
     </div>
 
-    <!-- Erklärungsbereich -->
-    <div id="explanation-area">
-      <h2>Was bedeutet das alles?</h2>
-      <p><strong>Grundumsatz (BMR - Basal Metabolic Rate):</strong> Die Menge an Energie, die dein Körper benötigt, um grundlegende Lebensfunktionen aufrechtzuerhalten, während du in Ruhe bist, in einem neutral temperierten Umfeld, in einem post-absorptiven Zustand (keine Verdauung von Nahrung).</p>
-      <p><strong>Aktivitätslevel:</strong> Die zusätzlichen Kalorien, die dein Körper benötigt, abhängig von deinem täglichen Aktivitätsniveau. Hier sind die Faktoren, die du verwenden kannst, um deinen Gesamtenergieverbrauch zu schätzen:</p>
-      <ul>
-          <li><strong>Sedentär:</strong> wenig oder keine Übung, BMR x 1,2</li>
-          <li><strong>Leicht aktiv:</strong> leichte Übung/Sport 1-3 Tage/Woche, BMR x 1,375</li>
-          <li><strong>Moderat aktiv:</strong> moderate Übung/Sport 3-5 Tage/Woche, BMR x 1,55</li>
-          <li><strong>Sehr aktiv:</strong> harte Übung/Sport 6-7 Tage die Woche, BMR x 1,725</li>
-          <li><strong>Extra aktiv:</strong> sehr harte Übung, körperlicher Beruf oder Training zweimal täglich, BMR x 1,9</li>
-      </ul>
-      <p>Beachte, dass diese Werte Durchschnittswerte sind und individuelle Unterschiede in Stoffwechsel und Körperzusammensetzung nicht berücksichtigen.</p>
-    </div>
+    <div style="width: 50%; min-width: 400px;">
 
-    <script src="script.js"></script>
-  </body>
+      <label for="activity">Aktivitätslevel:</label>
+      <select class="inputField" id="activity" onchange="calculateTotalCalories()">
+        <option value="1.2">Sedentär</option>
+        <option value="1.375">Leicht aktiv</option>
+        <option value="1.55">Moderat aktiv</option>
+        <option value="1.725">Sehr aktiv</option>
+        <option value="1.9">Extra aktiv</option>
+      </select><br />
+
+      <label for="activity">Ziel:</label>
+      <select class="inputField" id="goal" onchange="calculateTotalCalories()">
+        <option value="500">Massephase</option>
+        <option value="250">Magerer Muskelaufbau</option>
+        <option value="0" selected>Gewicht halten</option>
+        <option value="-500">Abnehmen</option>
+        <option value="-1000">Stark abnehmen</option>
+      </select><br />
+
+      <input class="button" type="submit" value="Gesamtkalorienbedarf berechnen" onclick="calculateTotalCalories()" />
+      <div id="total-calories-result"></div>
+      <div id="protein-result"></div>
+      <div id="remainingCalories"></div>
+
+      <!-- Slider --><br>
+      <label for="carbs-slider" style="font-weight: bold;">Kohlenhydrate (kCal):</label>
+      <input type="range" id="carbs-slider" min="0" max="remainingCalories" value="50" class="slider"
+        oninput="updateMacros()">
+      <span id="carbsKCal"></span> = <span id="carbs-amount"></span> Kohlenhydrate<br><br>
+
+      <label for="fats-slider" style="font-weight: bold;">Fett (kCal):</label>
+      <input type="range" id="fats-slider" min="0" max="remainingCalories" value="50" class="slider"
+        oninput="updateMacros()">
+      <span id="fatsKCal"></span> = <span id="fats-amount"></span> Fett<br>
+    </div>
+  </div>
+
+  <!-- Erklärungsbereich -->
+  <div id="explanation-area">
+    <h2>Was bedeutet das alles?</h2>
+    <p><strong>Grundumsatz (BMR - Basal Metabolic Rate):</strong> Die Menge an Energie, die dein Körper benötigt, um
+      grundlegende Lebensfunktionen aufrechtzuerhalten, während du in Ruhe bist, in einem neutral temperierten Umfeld,
+      in einem post-absorptiven Zustand (keine Verdauung von Nahrung).</p>
+    <p><strong>Aktivitätslevel:</strong> Die zusätzlichen Kalorien, die dein Körper benötigt, abhängig von deinem
+      täglichen Aktivitätsniveau. Hier sind die Faktoren, die du verwenden kannst, um deinen Gesamtenergieverbrauch zu
+      schätzen:</p>
+    <ul>
+      <li><strong>Sedentär:</strong> wenig oder keine Übung, BMR x 1,2</li>
+      <li><strong>Leicht aktiv:</strong> leichte Übung/Sport 1-3 Tage/Woche, BMR x 1,375</li>
+      <li><strong>Moderat aktiv:</strong> moderate Übung/Sport 3-5 Tage/Woche, BMR x 1,55</li>
+      <li><strong>Sehr aktiv:</strong> harte Übung/Sport 6-7 Tage die Woche, BMR x 1,725</li>
+      <li><strong>Extra aktiv:</strong> sehr harte Übung, körperlicher Beruf oder Training zweimal täglich, BMR x 1,9
+      </li>
+    </ul>
+    <p>Beachte, dass diese Werte Durchschnittswerte sind und individuelle Unterschiede in Stoffwechsel und
+      Körperzusammensetzung nicht berücksichtigen.</p>
+
+    <!-- BMI -->
+    <h2>BMI Klassifikationstabelle</h2>
+    <p><a href="https://de.wikipedia.org/wiki/Body-Mass-Index">Body-Mass-Index</a></p>
+    <table>
+      <tr>
+        <th>BMI (kg/m²)</th>
+        <th>Klassifizierung</th>
+        <th>Mögliche Gesundheitliche Folgen</th>
+      </tr>
+      <tr class="negative">
+        <td>Unter 16</td>
+        <td>Starkes Untergewicht</td>
+        <td>
+          Erhöhtes Risiko für
+          <a href="https://de.wikipedia.org/wiki/Osteoporose">Osteoporose</a>,
+          <a href="https://de.wikipedia.org/wiki/Immunschw%C3%A4che">Immunschwäche</a>,
+          <a href="https://de.wikipedia.org/wiki/Fruchtbarkeit">Fruchtbarkeitsstörungen</a>,
+          <a href="https://de.wikipedia.org/wiki/Herzrhythmusst%C3%B6rung">Herzrhythmusstörungen</a>,
+          <a href="https://de.wikipedia.org/wiki/An%C3%A4mie">Anämie</a>,
+          <a href="https://de.wikipedia.org/wiki/Vitaminmangel">Vitaminmangel</a>,
+          <a href="https://de.wikipedia.org/wiki/Ersch%C3%B6pfungssyndrom">chronische Müdigkeit</a>,
+          <a href="https://de.wikipedia.org/wiki/Hormonst%C3%B6rung">Hormonstörungen</a>
+        </td>
+      </tr>
+      <tr class="warning">
+        <td>16 - 16.9</td>
+        <td>Mäßiges Untergewicht</td>
+        <td></td>
+      </tr>
+      <tr class="positive">
+        <td>17 - 18.4</td>
+        <td>Leichtes Untergewicht</td>
+        <td>Bessere Leistungsfähigkeit für professionelle Athleten in bestimmten Sportarten</td>
+      </tr>
+      <tr class="positive">
+        <td>18.5 - 24.9</td>
+        <td>Normalgewicht</td>
+        <td></td>
+      </tr>
+      <tr class="warning">
+        <td>25 - 29.9</td>
+        <td>Übergewicht</td>
+        <td>
+          Erhöhtes Risiko für
+          <a href="https://de.wikipedia.org/wiki/Diabetes_mellitus#Diabetes_Typ_2">Typ-2-Diabetes</a>,
+          <a href="https://de.wikipedia.org/wiki/Herz-Kreislauf-Erkrankung">Herz-Kreislauf-Erkrankungen</a>,
+          <a href="https://de.wikipedia.org/wiki/Krebs_(Medizin)">bestimmte Krebsarten</a>,
+          <a href="https://de.wikipedia.org/wiki/Gelenk_(Anatomie)">Gelenkprobleme</a>
+        </td>
+      </tr>
+      <tr class="negative">
+        <td>30 - 34.9</td>
+        <td>Adipositas Grad 1</td>
+        <td>
+          Risiko für
+          <a href="https://de.wikipedia.org/wiki/Diabetes_mellitus#Diabetes_Typ_2">Diabetes Typ 2</a>,
+          <a href="https://de.wikipedia.org/wiki/Herz-Kreislauf-Erkrankung">Herz-Kreislauf-Erkrankungen</a>,
+          <a href="https://de.wikipedia.org/wiki/Fettleber">Fettleber</a>,
+          <a href="https://de.wikipedia.org/wiki/Schlafapnoe">Schlaf-Apnoe</a>,
+          <a
+            href="https://de.wikipedia.org/wiki/Arthropathie#:~:text=Arthropathie%20(von%20altgriechisch%20%E1%BC%84%CF%81%CE%B8%CF%81%CE%BF%CE%BD%20%C3%A1rthron,infekti%C3%B6s%20verursachte%20Erkrankungen%20der%20Gelenke.">Gelenkserkrankungen</a>
+        </td>
+      </tr>
+      <tr class="negative">
+        <td>35 - 39.9</td>
+        <td>Adipositas Grad 2</td>
+        <td>
+          Hohe Wahrscheinlichkeit für
+          <a href="https://de.wikipedia.org/wiki/Herz-Kreislauf-Erkrankung">Herz-Kreislauf-Erkrankungen</a>,
+          <a href="https://de.wikipedia.org/wiki/Diabetes_mellitus">Diabetes</a>,
+          <a href="https://de.wikipedia.org/wiki/Schlafst%C3%B6rung">Schlafstörungen</a>,
+          <a href="https://de.wikipedia.org/wiki/Atemnot">Atembeschwerden</a>
+        </td>
+      </tr>
+      <tr class="negative">
+        <td>40 und mehr</td>
+        <td>Adipositas Grad 3</td>
+        <td>
+          Sehr hohes Risiko für
+          <a href="https://de.wikipedia.org/wiki/Herz-Kreislauf-Erkrankung">Herz-Kreislauf-Erkrankungen</a>,
+          <a href="https://de.wikipedia.org/wiki/Diabetes_mellitus">Diabetes</a>,
+          <a href="https://de.wikipedia.org/wiki/Atemnot">Atmungsprobleme</a>,
+          <a href="https://de.wikipedia.org/wiki/Krebs">bestimmte Krebsarten</a>
+        </td>
+      </tr>
+
+    </table>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/BodyMassIndex.svg/1280px-BodyMassIndex.svg.png"
+    decoding="async" width="660" height="414" class="mw-file-element" style="margin-top: 10px;"/>
+    <figcaption style="color: grey;">Gewichtsklassen in Abhängigkeit von Körpermasse und Körpergröße (nach nebenstehenden BMI-Angaben)</figcaption>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
